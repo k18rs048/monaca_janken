@@ -118,10 +118,36 @@
         $("#newgame").css("display", "inline");
       }
 
+      function fetchAll() {
+        JankenScore.fetchAll()
+        .then(function(result){
+          var msg="";
+          for(var i=result.length-1; i>=0 ;i--){
+            msg += result[i].get(key) +"連勝"+ "<br>";
+          }
+           $("#result3").removeClass();
+           $("#result3").addClass("text-light");
+           $("#result3").addClass("bg-primary");
+           $("#result3").html(msg);
+        })
+         .catch(function(error){
+          $("#result3").removeClass();
+          $("#result3").addClass("bg-warning");
+          $("#result3").html("delete fail:" + JSON.stringify(error));
+         })
+     }
+
+     function deleteDate(){
+       var msgA = "";
+       $("#result3").html(msgA);
+     }
+
       // ゲーム初期化
       $(function(){
         newgame();
       })
+      
+     
     </script>
 </head>
 <body>
@@ -132,10 +158,14 @@
     <a onclick="choki();" class="btn btn-outline-primary hand" role="button">ちょき</a>
     <a onclick="pa();" class="btn btn-outline-primary hand" role="button">ぱー</a>
     <a onclick="newgame();" class="btn btn-info text-white" id="newgame" role="button">New Game</a>
+    <a onclick="fetchAll();" class="btn btn-outline-secondary" role="buton">記録</a>
+    <a onclick="deleteDate();" class="btn btn-outline-secondary" role="buton">非表示</a>
   </div>
   <div id="result" class="text-white bg-secondary">
   </div>
   <div id="result2" class="bg-warning">
+  </div>
+   <div id="result3" class="bg-warning">
   </div>
 </body>
 </html>
